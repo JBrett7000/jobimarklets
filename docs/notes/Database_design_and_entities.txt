@@ -1,0 +1,47 @@
+
+Author: Ndifreke Ekott <ndy40.ekott@gmail.com>
+Created: 16th January, 2017.
+Version: 1.0 Draft.
+Document: Database Table Design for Jobi-markelet. 
+----------------------------------------------------
+
+This document simply lists all the entities related to this project. A brief note is also appended where necessary.
+
+1. Users Table - This will be the default Laravel User created with the Laravel Authentication service.
+    - Id - INT PK
+    - Email - Varchar(150)
+    - Password - Varchar(20)
+    - Enabled - Tinyint(1) - Takes value of 0 or 1 were 0 is for false and 1 is for true.
+    - Created_at - Timestamp
+
+2. Bookmarks Table - This is the bookmarks table
+    - Id - Int PK
+    - User_id - INT FK
+    - Title - Varchar(255)
+    - Image Url - Blob ( For no reason in particular, decided to save my images in a database column)
+    - Url - Medium Text (Some urls can be weird and long. Making allowance)
+    - Description - Varchar(255)
+    - Created_at - Timestamp
+    - Deleted_at - Timestamp
+    - Updated_at - Timestamp
+
+3. Tags Table - This is the tag collection table
+    - Id - Int PK
+    - User_id - Int FK
+    - Name - Varchar(255)
+
+4. Categories Table - For grouping bookmarks.
+    - Id - Int PK
+    - User_id - Int FK
+    - Name - Category Name
+    - Description - Varchar(100)
+    - Created_at - Timestamp
+    - Updated_at - Timestamp
+    
+5. Bookmarks_Categories - Mapping Categories to Bookmarks
+    - User_Id - Int FK
+    - Bookmark_Id - Int FK
+    - Category_Id - Int FK
+
+
+    
