@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="Jobimarklets" default="build" description="Simple Bookmarking applicaiton">
+
+    <!--Build Project-->
+    <target name="build" description="Build project" depends="prepare" />
+
+    <!--Prepare Project-->
+    <target name="prepare" description="updating composer requirements">
+        <exec executable="composer">
+            <arg value="update"/>
+        </exec>
+    </target>
+
+
+    <!--Define Test Task-->
+    <target name="test" description="Run unit tests" depends="prepare">
+        <echo msg="Running unit tests"/>
+        <exec executable="vendor/bin/phpunit" />
+    </target>
+
+    <!--Coding standards-->
+    <target
+        name="codestyle"
+        description="check the respecting coding standards"
+    >
+        <!--We should have a set of commands to be executed here. -->
+        <!--This will be all the PHPMD, PHPCS task.-->
+    </target>
+</project>
