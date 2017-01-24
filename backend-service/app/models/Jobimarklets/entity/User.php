@@ -1,6 +1,6 @@
 <?php
 
-namespace jobimarklets\entity;
+namespace Jobimarklets\entity;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;

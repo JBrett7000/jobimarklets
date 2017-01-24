@@ -6,7 +6,7 @@
  * Time: 08:53
  */
 
-namespace jobimarklets\entity;
+namespace Jobimarklets\entity;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Category - Category a Bookmarklet is under
  *
- * @package jobimarklets\entity
+ * @package Jobimarklets\entity
  * @property int $id - Category ID
  * @property int $user_id - User ID.
  * @property string $name - Name of category

@@ -6,14 +6,14 @@
  * Time: 09:09
  */
 
-namespace jobimarklets\entity;
+namespace Jobimarklets\entity;
 
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Tag - Bookmark tags.
- * @package jobimarklets\entity
+ * @package Jobimarklets\entity
  * @property int $id - Tag ID
  * @property  int $user_id - User ID owning this tag.
  * @property  string $title - Title of tag.

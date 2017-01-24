@@ -6,7 +6,7 @@
  * Time: 08:35
  */
 
-namespace jobimarklets\entity;
+namespace Jobimarklets\entity;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Bookmark - A simple Bookmark class.
  *
- * @package jobimarklets\entity
+ * @package Jobimarklets\entity
  *
  * @property int $id - Bookmark ID.
  * @property int $user_id - Id of the user who owns this.
