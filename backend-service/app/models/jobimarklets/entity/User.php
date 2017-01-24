@@ -1,8 +1,10 @@
 <?php
 
-namespace App;
+namespace jobimarklets\entity;
 
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Collection;
+use jobimarklets\entity\Bookmark;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -29,4 +31,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Bookmarks owned by the user.
+     * @return Collection - Colleciton of Bookmarks
+     */
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class, 'user_id');
+    }
+
+    /**
+     * User defined categories.
+     *
+     * @return Collection - Collection of Category
+     */
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'user_id');
+    }
 }

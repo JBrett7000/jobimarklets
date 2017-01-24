@@ -43,5 +43,6 @@ This document simply lists all the entities related to this project. A brief not
     - Bookmark_Id - Int FK
     - Category_Id - Int FK
 
-
-    
+6. Bookmarks_Tags - Mapping Bookmarks to the respective user Tags.
+    - Bookmark_id - Int FK
+    - Tag_id - Int FK
