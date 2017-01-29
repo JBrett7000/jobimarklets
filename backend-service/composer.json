@@ -17,13 +17,12 @@
         "squizlabs/php_codesniffer": "*",
         "sebastian/phpcpd": "*",
         "phpmd/phpmd" : "@stable",
-        "phing/phing": "2.*",
-        "sami/sami": "4.*"
+        "phing/phing": "2.*"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Jobimarklets\\": "app/models/"
+            "Jobimarklets\\": "app/models/Jobimarklets/"
         }
     },
     "autoload-dev": {

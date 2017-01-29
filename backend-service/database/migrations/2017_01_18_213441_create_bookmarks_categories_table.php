@@ -49,8 +49,8 @@ class CreateBookmarksCategoriesTable extends Migration
             $table->dropForeign('bookmarks_categories_user_id_foreign');
             $table->dropForeign('bookmarks_categories_bookmark_id_foreign');
             $table->dropForeign('bookmarks_categories_category_id_foreign');
-
-
         });
+
+        Schema::drop('bookmarks_categories');
     }
 }

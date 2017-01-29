@@ -18,11 +18,24 @@
         <exec executable="vendor/bin/phpunit" />
     </target>
 
+
+
     <!--Coding standards-->
+    <property
+        name="phpmd.rulesets"
+        value="codesize,cleancode,controversial,design,unusedcode"
+    />
+
     <target
         name="codestyle"
         description="check the respecting coding standards"
     >
+        <exec executable="vendor/bin/phpmd" level="error">
+            <arg value="app"/>
+            <arg value="xml"/>
+            <arg value="${phpmd.rulesets}"/>
+            <arg line="--reportfile phpmd.xml"/>
+        </exec>
         <!--We should have a set of commands to be executed here. -->
         <!--This will be all the PHPMD, PHPCS task.-->
     </target>

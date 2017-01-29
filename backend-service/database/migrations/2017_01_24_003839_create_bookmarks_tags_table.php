@@ -30,5 +30,7 @@ class CreateBookmarksTagsTable extends Migration
             $table->dropForeign('bookmarks_tags_bookmark_id_foreign');
             $table->dropForeign('bookmarks_tags_tag_id_foreign');
         });
+
+        Schema::drop('bookmarks_tags');
     }
 }
