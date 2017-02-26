@@ -9,27 +9,13 @@
 namespace Jobimarklets\Logic;
 
 
-use Jobimarklets\Repository\RepositoryInterface;
-
 /**
  * Class BookmarkLogic
  * This class is used to perform all database operations related to Bookmarks.
  *
  * @package Jobimarklets\Logic
  */
-class BookmarkLogic implements LogicInterface
+class BookmarkLogic extends AbstractLogic
 {
-    /**
-     * @var RepositoryInterface
-     */
-    protected $repository;
 
-    /**
-     * BookmarkLogic constructor.
-     * @param RepositoryInterface $repo
-     */
-    public function __construct(RepositoryInterface $repo)
-    {
-        $this->repository = $repo;
-    }
 }

@@ -147,14 +147,5 @@ class DataRespositoryTest extends TestCase
         ];
     }
 
-    protected function userProdiver()
-    {
-        $user = new User();
-        $user->name = 'User 1';
-        $user->email = 'user@gmail.com';
-        $user->password = 'password1';
-        $user->enabled = true;
 
-        return $user;
-    }
 }

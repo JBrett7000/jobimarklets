@@ -16,4 +16,15 @@ abstract class TestCase extends Laravel\Lumen\Testing\TestCase
     {
         return new \Jobimarklets\Repository\DataRepository($class);
     }
+
+    protected function userProdiver()
+    {
+        $user = new \Jobimarklets\entity\User();
+        $user->name = 'User 1';
+        $user->email = 'user@gmail.com';
+        $user->password = 'password1';
+        $user->enabled = true;
+
+        return $user;
+    }
 }

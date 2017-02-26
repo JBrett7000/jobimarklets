@@ -14,11 +14,10 @@
 
     <!--Define Test Task-->
     <target name="test" description="Run unit tests" depends="prepare">
-        <echo msg="Running unit tests"/>
-        <exec executable="vendor/bin/phpunit" />
+        <exec executable="vendor/bin/phpunit" passthru="true" level="error" checkreturn="true">
+            <arg line="--testdox"/>
+        </exec>
     </target>
-
-
 
     <!--Coding standards-->
     <property

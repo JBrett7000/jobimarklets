@@ -4,15 +4,29 @@ namespace Jobimarklets\entity;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
-use jobimarklets\entity\Bookmark;
+use Illuminate\Support\Facades\Validator;
+use Jobimarklets\HasValidatorInterface;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class User extends Model implements
+    AuthenticatableContract,
+    AuthorizableContract,
+    HasValidatorInterface
 {
     use Authenticatable, Authorizable;
+
+    /**
+     * Validation rules
+     */
+    const USER_RULES = [
+        'name'  => 'required|alpha|min:3|max:50',
+        'email' => 'required|email',
+        'password' => 'required|alpha_num|min:8|max:20',
+        'enabled' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +34,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'email', 'password', 'enabled',
     ];
 
     /**
@@ -29,7 +43,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password',
+//        'password',
     ];
 
     /**
@@ -41,6 +55,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany(Bookmark::class, 'user_id');
     }
 
+
+
     /**
      * User defined categories.
      *
@@ -50,4 +66,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasMany(Category::class, 'user_id');
     }
+
+    public function validate()
+    {
+        return Validator::make($this->getAttributes(), self::USER_RULES);
+    }
+
+
 }

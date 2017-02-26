@@ -116,6 +116,7 @@ class DataRepository implements RepositoryInterface
         }
 
         if (!class_exists($model)) {
+
             throw new InvalidArgumentException("class $model does not exists");
         }
 
