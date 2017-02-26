@@ -10,9 +10,20 @@ namespace Jobimarklets\Logic;
 
 use Jobimarklets\entity\User;
 use Jobimarklets\Exceptions\UserCreationException;
+use Jobimarklets\Exceptions\UserUpdateException;
 
 class UserLogic extends AbstractLogic
 {
+
+    /**
+     * Find the user by ID
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function find($id)
+    {
+        return $this->repository->find($id);
+    }
 
     /**
      *  Create New User
@@ -55,10 +66,17 @@ class UserLogic extends AbstractLogic
                 ''
             );
 
-            throw new UserCreationException(
-                'Error creating user. ' .  $errors
+            throw new UserUpdateException(
+                'Error updating user. ' .  $errors
             );
         }
+
+        return $this->repository->update($user);
+    }
+
+    public function deleteUser($id)
+    {
+        return $this->repository->delete($id);
     }
 
 
