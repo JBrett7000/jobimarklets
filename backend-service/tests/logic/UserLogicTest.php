@@ -87,14 +87,21 @@ class UserLogicTest extends TestCase
      */
     public function testUpdateUser()
     {
-        $user = [
+        $user = new User([
             'name'      => 'User',
             'email'     => 'user@mail.com',
             'password'  => 'password1',
             'enabled'   => true,
-        ];
+        ]);
 
-        $this->assertTrue($this->userLogic->updateUser(1, $user));
+        //fail because of Username
+        $this->userLogic->createUser($user);
+
+        $user = $this->userLogic->find(1);
+        $user->name = 'Sameuel';
+        $user->enabled = false;
+
+        $this->assertTrue($this->userLogic->updateUser($user));
     }
 
     /**
@@ -102,6 +109,35 @@ class UserLogicTest extends TestCase
      */
     public function testDeleteUser()
     {
+        $user = new User([
+            'name'      => 'User',
+            'email'     => 'user@mail.com',
+            'password'  => 'password1',
+            'enabled'   => true,
+        ]);
+
+        //fail because of Username
+        $this->userLogic->createUser($user);
+
         $this->assertTrue($this->userLogic->deleteUser(1));
+    }
+
+    /**
+     *  Test you can find user.
+     */
+    public function testFindUser()
+    {
+        $user = new User([
+            'name'      => 'User',
+            'email'     => 'user@mail.com',
+            'password'  => 'password1',
+            'enabled'   => true,
+        ]);
+
+
+        $this->assertTrue($this->userLogic->createUser($user));
+
+        $user = $this->userLogic->find(1);
+        $this->assertInstanceOf(User::class, $user);
     }
 }
