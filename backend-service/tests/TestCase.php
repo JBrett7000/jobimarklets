@@ -20,7 +20,7 @@ abstract class TestCase extends Laravel\Lumen\Testing\TestCase
     protected function userProdiver()
     {
         $user = new \Jobimarklets\entity\User();
-        $user->name = 'User 1';
+        $user->name = 'User';
         $user->email = 'user@gmail.com';
         $user->password = 'password1';
         $user->enabled = true;

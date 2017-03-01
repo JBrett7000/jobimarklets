@@ -10,6 +10,8 @@ namespace Jobimarklets\entity;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Jobimarklets\HasValidatorInterface;
 
 /**
  * Class Bookmark - A simple Bookmark class.
@@ -26,9 +28,20 @@ use Illuminate\Database\Eloquent\Model;
  * @property datetime $updated_at - Date bookmark was updated.
  * @property datetime $deleted_at - Date bookmark was deleted.
  */
-class Bookmark extends Model
+class Bookmark extends Model implements HasValidatorInterface
 {
     protected $table = 'bookmarks';
+
+    protected $fillable = [
+        'title', 'url', 'image', 'description',
+    ];
+
+    const RULES = [
+        'title'         => 'required|max:150',
+        'url'           => 'required|url',
+        'description'   => 'required|max:255|min:50',
+        'image'         => 'alpha_num',
+    ];
 
 
     public function tags()
@@ -41,4 +54,23 @@ class Bookmark extends Model
         );
     }
 
+    /**
+     *  Get the user that owns this bookmark.
+     * @return User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Validate this Bookmark.
+     * @return mixed
+     */
+    public function validate()
+    {
+        return Validator::make($this->getAttributes(), self::RULES);
+    }
+
 }
+
