@@ -1,2 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
+/backend-service/vendor/
+backend-service/public/assets/
+.gitignore
+
