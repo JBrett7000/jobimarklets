@@ -5,7 +5,6 @@ var helpers = require('./helpers');
 
 module.exports = webpackMerge(commonConfig, {
   devtool: 'cheap-module-eval-source-map',
-
   output: {
     path: '../backend-service/public/assets',
     filename: '[name].js',
