@@ -2,3 +2,4 @@
 .gitignore
 .idea/
 app/models/
+node_modules
