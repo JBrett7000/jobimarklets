@@ -1,32 +1,14 @@
 {
-  "name": "jobimarklets",
-  "version": "0.1.0",
-  "description": "This is a simple Bookmarks management service.",
+  "name": "angular2starter",
+  "version": "0.0.0",
+  "description": "simpleangularstarter",
   "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --inline --progress --port 8080",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
+    "build": "rimraf dist && webpack --config config/webpack.dev.js --progress --profile --bail"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/ndy40/jobimarklets.git"
-  },
-  "keywords": [
-    "bookmarks",
-    "webpack",
-    "typescript",
-    "angularjs"
-  ],
-  "author": "Ndifreke Ekott",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ndy40/jobimarklets/issues"
-  },
-  "homepage": "https://github.com/ndy40/jobimarklets#readme",
   "dependencies": {
     "@angular/common": "~2.4.0",
     "@angular/compiler": "~2.4.0",
@@ -38,24 +20,33 @@
     "@angular/router": "~3.4.0",
     "core-js": "^2.4.1",
     "rxjs": "5.0.1",
-    "zone.js": "^0.7.4",
-    "reflect-metadata": "^0.1.8"
+    "zone.js": "^0.7.4"
   },
   "devDependencies": {
-    "typescript": "~2.0.10",
-    "tslint": "^3.15.1",
-    "@types/node": "^6.0.46",
-    "typings": "^2.0.0",
-    "webpack": "2.2.0",
-    "webpack-dev-server": "2.2.0-rc.0",
-    "webpack-merge": "^2.4.0",
-    "style-loader": "^0.13.1",
+    "@types/node": "^6.0.45",
+    "@types/jasmine": "^2.5.41",
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^3.0.0-beta.18",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "2.0.0-beta.5",
     "file-loader": "^0.9.0",
     "html-loader": "^0.4.3",
-    "html-webpack-plugin": "^2.16.1"
+    "html-webpack-plugin": "^2.16.1",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.2.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.1",
+    "null-loader": "^0.1.1",
+    "phantomjs-prebuilt": "^2.1.7",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.2",
+    "style-loader": "^0.13.1",
+    "typescript": "~2.0.10",
+    "webpack": "2.2.0",
+    "webpack-dev-server": "2.2.0-rc.0",
+    "webpack-merge": "^2.4.0"
   }
+
 }

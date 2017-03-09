@@ -1,14 +1,11 @@
 "use strict";
-/**
- * Created by ndy40 on 09/02/2017.
- */
 require('core-js/es6');
 require('core-js/es7/reflect');
 require('zone.js/dist/zone');
 if (process.env.ENV === 'production') {
 }
 else {
-    // Development and test
+    // Development and testing
     Error['stackTraceLimit'] = Infinity;
     require('zone.js/dist/long-stack-trace-zone');
 }
