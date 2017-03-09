@@ -1,5 +1,2 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-/backend-service/vendor/
-/frontend/node_modules/
-frontend/node_modules/
