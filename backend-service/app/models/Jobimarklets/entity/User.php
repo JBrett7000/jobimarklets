@@ -11,6 +11,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
+/**
+ * Class User
+ * @package Jobimarklets\entity
+ * @property int $id - User ID
+ * @property string $name - Name of user
+ * @property string $email - Email of user
+ * @property boolean $enabled - Enable flag.
+ * @property string $password - Password
+ * @property string $api_token - Api token for this user
+ * @property datetime $api_token_expires - Time left for api_token to expire.
+ */
 class User extends Model implements
     AuthenticatableContract,
     AuthorizableContract,
@@ -22,10 +33,12 @@ class User extends Model implements
      * Validation rules
      */
     const USER_RULES = [
-        'name'  => 'required|alpha|min:3|max:50',
-        'email' => 'required|email',
-        'password' => 'required|alpha_num|min:8|max:20',
-        'enabled' => 'boolean',
+        'name'              => 'required|string|min:3|max:50',
+        'email'             => 'required|email',
+        'password'          => 'required|min:8|max:100',
+        'enabled'           => 'boolean',
+        'api_token'         => 'nullable|string',
+        'api_token_expires' => 'nullable|date',
     ];
 
     /**
@@ -34,7 +47,7 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'enabled',
+        'name', 'email', 'password', 'enabled', 'api_token', 'api_token_expires'
     ];
 
     /**
@@ -43,7 +56,8 @@ class User extends Model implements
      * @var array
      */
     protected $hidden = [
-//        'password',
+        'password', 'api_token', 'api_token_expires', 'remember_token',
+        'enabled',
     ];
 
     /**

@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Jobimarklets\Exceptions\JobiMarkletException;
+use Jobimarklets\Exceptions\UserCreationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -45,6 +47,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof JobiMarkletException) {
+            return response()->json(
+                ['message' => $e->getMessage()],
+                401
+            );
+        }
+
+        if ($request->ajax()) {
+            return response()->json(
+                ['message' => $e->getMessage()],
+                400
+            );
+        }
+
         return parent::render($request, $e);
     }
 }

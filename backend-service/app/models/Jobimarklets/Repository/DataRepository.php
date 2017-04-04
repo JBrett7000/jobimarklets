@@ -53,7 +53,7 @@ class DataRepository implements RepositoryInterface
         $model = $this->model()->query();
 
         foreach ($attribute as $key => $value) {
-            $model->where($key, '=', $value);
+            $model->where($key, $value['operator'], $value['value']);
         }
         return $model->get();
     }
