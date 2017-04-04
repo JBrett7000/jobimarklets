@@ -19,13 +19,15 @@ class CreateCategoriesTable extends Migration
             $table->string('name', 150);
             $table->string('description', 150);
             $table->timestamps();
+
+
         });
 
         Schema::table('categories', function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('SET NULL');
+                ->onDelete('cascade');
         });
     }
 

@@ -39,7 +39,9 @@ class UserLogic extends AbstractLogic
            $errors =  array_reduce(
                 $validator->errors()->all(),
                 function ($context, $item) {
-                    return $context .= $item;
+                    $context .= $item;
+
+                    return $context;
                 },
                 ''
             );
@@ -61,7 +63,8 @@ class UserLogic extends AbstractLogic
             $errors =  array_reduce(
                 $validator->errors()->all(),
                 function ($context, $item) {
-                    return $context .= $item;
+                    $context .= $item;
+                    return $context;
                 },
                 ''
             );
@@ -79,5 +82,22 @@ class UserLogic extends AbstractLogic
         return $this->repository->delete($id);
     }
 
+    /**
+     *  Simple Token generation method.
+     * @return string
+     */
+    public function generateToken()
+    {
+        return bin2hex(openssl_random_pseudo_bytes(60));
+    }
 
+    /**
+     * Find user by attributes. [key => ['operator' => '<,>,=,<>', 'value' => mixed]
+     * @param array $attributes
+     * @return mixed
+     */
+    public function findBy(array $attributes)
+    {
+        return $this->repository->findBy($attributes);
+    }
 }

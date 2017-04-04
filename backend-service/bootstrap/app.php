@@ -68,6 +68,7 @@ require_once 'bindings.php';
 
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
+     'valtoken' => \App\Http\Middleware\TokenValidator::class,
  ]);
 
 /*
