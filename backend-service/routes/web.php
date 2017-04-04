@@ -14,3 +14,6 @@
 $app->get('/', function () use ($app) {
     return $app->make('view')->make('welcome');
 });
+
+// Custom User Routes
+new \Jobimarklets\AuthRoutes($app);

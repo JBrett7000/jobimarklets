@@ -15,26 +15,24 @@ class CreateBookmarksCategoriesTable extends Migration
     {
         Schema::create('bookmarks_categories', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->integer('bookmark_id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->bigInteger('bookmark_id')->unsigned();
+            $table->bigInteger('category_id')->unsigned();
         });
 
 
         Schema::table('bookmarks_categories', function (Blueprint $table) {
            $table->foreign('user_id')
-               ->references('id')
-               ->on('users')
-               ->onDelete('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
-           $table->foreign('bookmark_id')
-               ->references('id')
-               ->on('bookmarks')
+           $table->foreign('bookmark_id')->references('id')->on('bookmarks')
                ->onDelete('cascade');
 
            $table->foreign('category_id')
-               ->references('id')
-               ->on('categories')
-               ->onDelete('SET NULL');
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
         });
     }
 
