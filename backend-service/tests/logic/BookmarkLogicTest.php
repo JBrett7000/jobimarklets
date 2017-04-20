@@ -18,6 +18,8 @@ class BookmarkLogicTest extends TestCase
 
     protected $userLogic;
 
+    protected $user;
+
     protected function bookmarkProvider()
     {
         return new \Jobimarklets\entity\Bookmark([
@@ -41,11 +43,12 @@ class BookmarkLogicTest extends TestCase
         $this->userLogic = new \Jobimarklets\Logic\UserLogic(
             $this->dataRepositoryProvider(\Jobimarklets\entity\User::class)
         );
+
+        $this->userLogic->createUser($this->userProdiver());
     }
 
     public function testCreateValidBookmark()
     {
-        $this->assertTrue($this->userLogic->createUser($this->userProdiver()));
         $user = $this->userLogic->find(1);
 
         $this->assertInstanceOf(\Jobimarklets\entity\User::class, $user);
@@ -57,11 +60,11 @@ class BookmarkLogicTest extends TestCase
     }
 
     /**
+     * @
      * @expectedException \Jobimarklets\Exceptions\BookmarkCreationException
      */
     public function testCreateBookmarkWithInvalidDescription ()
     {
-        $this->assertTrue($this->userLogic->createUser($this->userProdiver()));
         $user = $this->userLogic->find(1);
 
         $this->assertInstanceOf(\Jobimarklets\entity\User::class, $user);
@@ -78,9 +81,6 @@ class BookmarkLogicTest extends TestCase
     public function testFindBookmark()
     {
         $bookmark = $this->bookmarkProvider();
-        $user = $this->userProdiver();
-
-        $this->userLogic->createUser($user);
         $user = $this->userLogic->find(1);
 
         $this->bmLogic->createBookmark($user, $bookmark);
@@ -98,14 +98,11 @@ class BookmarkLogicTest extends TestCase
     public function testDeleteBookmark()
     {
         $bookmark = $this->bookmarkProvider();
-        $user = $this->userProdiver();
-
-        $this->userLogic->createUser($user);
         $user = $this->userLogic->find(1);
 
         $this->bmLogic->createBookmark($user, $bookmark);
-
         $bookmark = $this->bmLogic->find(1);
+
         $this->assertInstanceOf(
             \Jobimarklets\entity\Bookmark::class,
             $bookmark
@@ -120,9 +117,6 @@ class BookmarkLogicTest extends TestCase
     public function testUpdateBookmark()
     {
         $bookmark = $this->bookmarkProvider();
-        $user = $this->userProdiver();
-
-        $this->userLogic->createUser($user);
         $user = $this->userLogic->find(1);
 
         $this->bmLogic->createBookmark($user, $bookmark);

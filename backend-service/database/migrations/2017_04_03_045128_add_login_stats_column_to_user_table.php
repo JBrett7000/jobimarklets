@@ -14,9 +14,9 @@ class AddLoginStatsColumnToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('failed_attempts')->unsigned();
+            $table->integer('failed_attempts')->unsigned()->default(0);
             $table->date('last_loggedin')->nullable();
-            $this->string('ip_address')->nullable();
+            $table->string('ip_address')->nullable();
         });
     }
 
