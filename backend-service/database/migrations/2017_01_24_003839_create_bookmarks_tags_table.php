@@ -14,8 +14,8 @@ class CreateBookmarksTagsTable extends Migration
     public function up()
     {
         Schema::create('bookmarks_tags', function (Blueprint $table) {
-            $table->integer('bookmark_id')->unsigned();
-            $table->integer('tag_id')->unsigned();
+            $table->bigInteger('bookmark_id')->unsigned();
+            $table->bigInteger('tag_id')->unsigned();
         });
     }
 
@@ -26,11 +26,6 @@ class CreateBookmarksTagsTable extends Migration
      */
     public function down()
     {
-        Schema::table('bookmarks_tags', function (Blueprint $table) {
-            $table->dropForeign('bookmarks_tags_bookmark_id_foreign');
-            $table->dropForeign('bookmarks_tags_tag_id_foreign');
-        });
-
         Schema::drop('bookmarks_tags');
     }
 }

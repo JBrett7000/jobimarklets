@@ -64,10 +64,10 @@ class DataRespositoryTest extends TestCase
         $repo->save($user2);
 
         //find by attribute
-        $user = $repo->findBy(['name' => 'user 2']);
+        $user = $repo->findBy(['name' => ['operator' => '=', 'value' => 'user 2']]);
         $this->assertEquals('user 2', $user->get(0)->name);
 
-        $user = $repo->findBy(['email' => 'user@gmail.com']);
+        $user = $repo->findBy(['email' => ['value' =>'user@gmail.com', 'operator' => '=']]);
         $this->assertEquals('user@gmail.com', $user->get(0)->email);
     }
 

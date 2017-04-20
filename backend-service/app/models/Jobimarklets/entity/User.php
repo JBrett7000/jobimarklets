@@ -33,7 +33,7 @@ class User extends Model implements
      * Validation rules
      */
     const USER_RULES = [
-        'name'              => 'required|string|min:3|max:50',
+        'name'              => 'required|alpha|min:3|max:50',
         'email'             => 'required|email',
         'password'          => 'required|min:8|max:100',
         'enabled'           => 'boolean',
