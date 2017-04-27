@@ -19,6 +19,8 @@ class UserEvent extends Event
 
     const EVENT_TYPE_UPDATED = 'updated';
 
+    const EVENT_TYPE_DELETE_ACCOUNT = 'remove';
+
     /**
      *  Associated user.
      * @var User

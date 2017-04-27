@@ -20,17 +20,11 @@ use Jobimarklets\entity\Bookmark;
 
 //// Register Logic Layer dependencies ////
 
-$app->bind('\Jobimarklets\Logic\UserLogic', function () {
-    return new UserLogic(
-        new DataRepository(User::class)
-    );
-});
+//$app->bind(UserLogic::class, function () {
+//    return new UserLogic(
+//        new DataRepository(User::class)
+//    );
+//});
 
-$app->bind('\Jobimarklets\Logic\Bookmark', function () {
-    return new BookmarkLogic(
-        new DataRepository(
-            Bookmark::class
-        )
-    );
-});
+
 

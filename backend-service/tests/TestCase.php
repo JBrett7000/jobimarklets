@@ -36,6 +36,7 @@ abstract class TestCase extends Laravel\Lumen\Testing\TestCase
         \Illuminate\Support\Facades\DB::delete('delete from tags');
         \Illuminate\Support\Facades\DB::delete('delete from bookmarks');
         \Illuminate\Support\Facades\DB::delete('delete from users');
+        \Illuminate\Support\Facades\DB::delete('delete from cache');
 
 
         \Illuminate\Support\Facades\DB::statement('ALTER TABLE users AUTO_INCREMENT = 1');

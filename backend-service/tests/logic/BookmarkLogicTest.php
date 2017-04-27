@@ -34,15 +34,9 @@ class BookmarkLogicTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->bmLogic =
-            new Jobimarklets\Logic\BookmarkLogic(
-                new Jobimarklets\Repository\DataRepository(
-                    Jobimarklets\entity\Bookmark::class
-                )
-            );
-        $this->userLogic = new \Jobimarklets\Logic\UserLogic(
-            $this->dataRepositoryProvider(\Jobimarklets\entity\User::class)
-        );
+        $this->bmLogic = $this->app->make(\Jobimarklets\Logic\BookmarkLogic::class);
+
+        $this->userLogic = $this->app->make(\Jobimarklets\Logic\UserLogic::class);
 
         $this->userLogic->createUser($this->userProdiver());
     }

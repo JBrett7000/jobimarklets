@@ -15,6 +15,7 @@ class AuthRoutes extends AbstractRoutes
     {
 
         $app->post('/auth', ['uses' => 'AuthController@authenticate']);
+        $app->post('/auth/create', ['uses' => 'AuthController@create']);
 
         $app->group(['middleware' => 'valtoken'], function () use ($app) {
 
@@ -23,8 +24,6 @@ class AuthRoutes extends AbstractRoutes
             $app->post('/auth/reset', ['uses' => 'AuthController@reset']);
 
             $app->get('/auth/logout', ['uses' => 'AuthController@logout']);
-
-            $app->post('/auth/create', ['uses' => 'AuthController@create']);
 
             $app->post('/auth/update/{id:[0-9]+}', ['uses' => 'AuthController@update']);
 

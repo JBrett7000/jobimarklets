@@ -4168,16 +4168,16 @@
         },
         {
             "name": "theseer/fdomdocument",
-            "version": "1.6.4",
+            "version": "1.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/fDOMDocument.git",
-                "reference": "cf219ede922fb47956726f35e2127277ebd302ca"
+                "reference": "8dcfd392135a5bd938c3c83ea71419501ad9855d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theseer/fDOMDocument/zipball/cf219ede922fb47956726f35e2127277ebd302ca",
-                "reference": "cf219ede922fb47956726f35e2127277ebd302ca",
+                "url": "https://api.github.com/repos/theseer/fDOMDocument/zipball/8dcfd392135a5bd938c3c83ea71419501ad9855d",
+                "reference": "8dcfd392135a5bd938c3c83ea71419501ad9855d",
                 "shasum": ""
             },
             "require": {
@@ -4204,7 +4204,7 @@
             ],
             "description": "The classes contained within this repository extend the standard DOM to use exceptions at all occasions of errors instead of PHP warnings or notices. They also add various custom methods and shortcuts for convenience and to simplify the usage of DOM.",
             "homepage": "https://github.com/theseer/fDOMDocument",
-            "time": "2017-04-17T09:08:13+00:00"
+            "time": "2017-04-21T14:50:31+00:00"
         },
         {
             "name": "webmozart/assert",
