@@ -11,9 +11,16 @@ namespace Jobimarklets\Logic;
 use Jobimarklets\entity\User;
 use Jobimarklets\Exceptions\UserCreationException;
 use Jobimarklets\Exceptions\UserUpdateException;
+use Jobimarklets\Repository\RepositoryInterface;
+use Jobimarklets\Repository\UserDataRepository;
 
 class UserLogic extends AbstractLogic
 {
+
+    public function __construct(UserDataRepository $repo)
+    {
+        parent::__construct($repo);
+    }
 
     /**
      * Find the user by ID

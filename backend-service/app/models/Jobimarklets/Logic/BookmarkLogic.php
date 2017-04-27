@@ -10,6 +10,8 @@ namespace Jobimarklets\Logic;
 use Jobimarklets\entity\Bookmark;
 use Jobimarklets\entity\User;
 use Jobimarklets\Exceptions\BookmarkCreationException;
+use Jobimarklets\Repository\BookmarkDataRepository;
+use Jobimarklets\Repository\RepositoryInterface;
 
 
 /**
@@ -20,6 +22,11 @@ use Jobimarklets\Exceptions\BookmarkCreationException;
  */
 class BookmarkLogic extends AbstractLogic
 {
+
+    public function __construct(BookmarkDataRepository $repo)
+    {
+        parent::__construct($repo);
+    }
 
     /**
      * Find Bookmark.

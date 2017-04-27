@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         $user = $this->userLogic->find($data['userid']);
 
-        return response()->json(['data' => $user->toJson()], 200);
+        return response()->json(['data' => $user->toArray()], 200);
     }
 
     /**
@@ -140,9 +140,14 @@ class AuthController extends Controller
      */
     public function reset()
     {
-        //TODO: take the username and password and token.
+        //TODO: take the username and captcha token.
         // - Validate the Captcha with Google. Implement when you can.
         // - Send an email with assigned token for reset.
+    }
+
+    public function validateCaptcha($token)
+    {
+        //TODO: validate token against google
     }
 
     public function logout(Request $req)
@@ -266,8 +271,17 @@ class AuthController extends Controller
         return !$model->isEmpty();
     }
 
-    public function unregister()
+    public function unregister(Request $request)
     {
-        //TODO: Implement to enable users clean their account.
+        $token = $request->header('api_token');
+        $cache = Cache::get($token);
+        $user = $this->userLogic->find($cache['userid']);
+        $this->userLogic->deleteUser($user->id);
+
+        event(
+            new UserEvent($user, UserEvent::EVENT_TYPE_DELETE_ACCOUNT)
+        );
+
+        return response('successful', 200);
     }
 }
