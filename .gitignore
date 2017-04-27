@@ -3,4 +3,5 @@
 /backend-service/vendor/
 backend-service/public/assets/
 .gitignore
-
+.idea/
+node_modules/
