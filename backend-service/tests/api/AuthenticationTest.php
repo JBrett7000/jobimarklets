@@ -66,21 +66,116 @@ class AuthenticationTest extends TestCase
 
     public function testFetchingDetailsOfAuthenticatedUser()
     {
-        $this->markTestIncomplete();
+        $users = [
+            'name' => 'user',
+            'email' => 'user@mail.com',
+            'password' => 'password1',
+            'enabled' => true,
+        ];
+
+        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+
+        $this->json(
+            'POST',
+            '/auth',
+            ['email' => 'user@mail.com', 'password' => 'password1']
+        )->assertResponseOk();
+
+        $this->json('GET', '/auth', [], ['api_token' => $this->response->getContent()])
+        ->seeJson([
+                'id' => 1,
+                'email' => 'user@mail.com',
+                'name' => 'user',
+            ]
+        );
     }
 
     public function testLogout()
     {
-        $this->markTestIncomplete();
+        $users = [
+            'name' => 'user',
+            'email' => 'user@mail.com',
+            'password' => 'password1',
+            'enabled' => true,
+        ];
+
+        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+
+        $this->json(
+            'POST',
+            '/auth',
+            ['email' => 'user@mail.com', 'password' => 'password1']
+        )->assertResponseOk();
+
+        $token = $this->response->getContent();
+
+        $this->json('GET', '/auth', [], [
+            'api_token' => $token
+            ]
+        )
+        ->seeJson([
+            'id' => 1,
+            'email' => 'user@mail.com',
+            'name' => 'user',
+        ])
+        ->json('GET', '/auth/logout', [],
+            ['api_token' => $token]
+        )
+        ->assertResponseOk();
     }
 
     public function testUnregisterUser()
     {
-        $this->markTestIncomplete();
+        $users = [
+            'name' => 'user',
+            'email' => 'user@mail.com',
+            'password' => 'password1',
+            'enabled' => true,
+        ];
+
+        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+
+        $this->json(
+            'POST',
+            '/auth',
+            ['email' => 'user@mail.com', 'password' => 'password1']
+        )->assertResponseOk();
+
+        $token = $this->response->getContent();
+
+        $this->json('POST', '/auth/delete', [],
+            ['api_token' => $token]
+        )->assertEquals('successful', $this->response->getContent());
     }
 
     public function testUpdateUserPassword()
     {
-        $this->markTestIncomplete();
+        $users = [
+            'name' => 'user',
+            'email' => 'user@mail.com',
+            'password' => 'password1',
+            'enabled' => true,
+        ];
+
+        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+
+        $this->json(
+            'POST',
+            '/auth',
+            ['email' => 'user@mail.com', 'password' => 'password1']
+        )->assertResponseOk();
+
+        $token = $this->response->getContent();
+
+        $this->json('GET', '/auth', [], [
+                'api_token' => $token
+            ]
+        )->assertResponseOk();
+
+        $this->json('POST', '/auth/update/1',
+            ['password' => 'password2'],
+            ['api_token' => $token]
+        )
+        ->assertResponseOk();
     }
 }

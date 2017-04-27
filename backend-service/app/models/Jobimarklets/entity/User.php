@@ -57,7 +57,7 @@ class User extends Model implements
      */
     protected $hidden = [
         'password', 'api_token', 'api_token_expires', 'remember_token',
-        'enabled',
+        'enabled', 'ip_address', 'failed_attempts', 'created_at', 'updated_at',
     ];
 
     /**

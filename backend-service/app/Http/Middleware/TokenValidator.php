@@ -26,6 +26,6 @@ class TokenValidator
             throw new AuthenticationException('Token expired.');
         }
 
-        $next($req);
+        return $next($req);
     }
 }

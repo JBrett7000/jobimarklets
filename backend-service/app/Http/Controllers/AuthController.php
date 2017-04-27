@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         $user = $this->userLogic->find($data['userid']);
 
-        return response()->json(['data' => $user->toJson()], 200);
+        return response()->json(['data' => $user->toArray()], 200);
     }
 
     /**
@@ -271,8 +271,17 @@ class AuthController extends Controller
         return !$model->isEmpty();
     }
 
-    public function unregister()
+    public function unregister(Request $request)
     {
-        //TODO: Implement to enable users clean their account.
+        $token = $request->header('api_token');
+        $cache = Cache::get($token);
+        $user = $this->userLogic->find($cache['userid']);
+        $this->userLogic->deleteUser($user->id);
+
+        event(
+            new UserEvent($user, UserEvent::EVENT_TYPE_DELETE_ACCOUNT)
+        );
+
+        return response('successful', 200);
     }
 }
