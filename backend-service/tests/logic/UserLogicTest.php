@@ -19,9 +19,10 @@ class UserLogicTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->userLogic = new \Jobimarklets\Logic\UserLogic(
-            $this->dataRepositoryProvider(\Jobimarklets\entity\User::class)
-        );
+        $this->userLogic = $this->app->make(\Jobimarklets\Logic\UserLogic::class);
+//            new \Jobimarklets\Logic\UserLogic(
+//            $this->dataRepositoryProvider(\Jobimarklets\entity\User::class)
+//        );
     }
 
     /**

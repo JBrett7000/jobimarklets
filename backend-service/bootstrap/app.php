@@ -48,6 +48,7 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+
 // custom bindings added here.
 require_once 'bindings.php';
 

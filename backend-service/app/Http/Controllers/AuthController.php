@@ -140,9 +140,14 @@ class AuthController extends Controller
      */
     public function reset()
     {
-        //TODO: take the username and password and token.
+        //TODO: take the username and captcha token.
         // - Validate the Captcha with Google. Implement when you can.
         // - Send an email with assigned token for reset.
+    }
+
+    public function validateCaptcha($token)
+    {
+        //TODO: validate token against google
     }
 
     public function logout(Request $req)
