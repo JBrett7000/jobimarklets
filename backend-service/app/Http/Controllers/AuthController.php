@@ -129,7 +129,7 @@ class AuthController extends Controller
         $user->api_token = $this->userLogic->generateToken();
         $user->api_token_expires = $expireDate;
 
-        $this->userLogic->updateUser($user);
+        $this->userLogic->update($user);
 
         return $user->api_token;
     }
@@ -160,7 +160,7 @@ class AuthController extends Controller
             $user->api_token = null;
             $user->api_token_expires = null;
 
-            $this->userLogic->updateUser($user);
+            $this->userLogic->update($user);
 
             Cache::forget($req->header('api_token'));
         }
@@ -208,7 +208,7 @@ class AuthController extends Controller
         }
 
         $user->password = Hash::make($req->input('password'));
-        $this->userLogic->createUser($user);
+        $this->userLogic->create($user);
 
         event(new UserEvent($user, UserEvent::EVENT_TYPE_CREATED));
 
@@ -245,7 +245,7 @@ class AuthController extends Controller
             }
 
             $user->password = Hash::make($req->input('password'));
-            $this->userLogic->updateUser($user);
+            $this->userLogic->update($user);
             event(new UserEvent($user, UserEvent::EVENT_TYPE_UPDATED));
 
         } catch (ModelNotFoundException $ex) {
@@ -276,7 +276,7 @@ class AuthController extends Controller
         $token = $request->header('api_token');
         $cache = Cache::get($token);
         $user = $this->userLogic->find($cache['userid']);
-        $this->userLogic->deleteUser($user->id);
+        $this->userLogic->delete($user->id);
 
         event(
             new UserEvent($user, UserEvent::EVENT_TYPE_DELETE_ACCOUNT)

@@ -23,7 +23,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Jobimarklets\\": "app/models/Jobimarklets/"
+            "Jobimarklets\\": "app/Models/Jobimarklets/"
         }
     },
     "autoload-dev": {

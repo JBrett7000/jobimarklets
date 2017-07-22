@@ -22,15 +22,6 @@ class UserLogic extends AbstractLogic
         parent::__construct($repo);
     }
 
-    /**
-     * Find the user by ID
-     * @param $id
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function find($id)
-    {
-        return $this->repository->find($id);
-    }
 
     /**
      *  Create New User
@@ -38,7 +29,7 @@ class UserLogic extends AbstractLogic
      * @return mixed
      * @throws UserCreationException
      */
-    public function createUser(User $user)
+    public function create(User $user)
     {
         $validator = $user->validate();
 
@@ -62,7 +53,14 @@ class UserLogic extends AbstractLogic
         return $this->repository->save($user);
     }
 
-    public function updateUser(User $user)
+    /**
+     * Update User record.
+     *
+     * @param User $user
+     * @return mixed
+     * @throws UserUpdateException
+     */
+    public function update(User $user)
     {
         $validator = $user->validate();
 
@@ -84,10 +82,6 @@ class UserLogic extends AbstractLogic
         return $this->repository->update($user);
     }
 
-    public function deleteUser($id)
-    {
-        return $this->repository->delete($id);
-    }
 
     /**
      *  Simple Token generation method.
@@ -96,15 +90,5 @@ class UserLogic extends AbstractLogic
     public function generateToken()
     {
         return bin2hex(openssl_random_pseudo_bytes(60));
-    }
-
-    /**
-     * Find user by attributes. [key => ['operator' => '<,>,=,<>', 'value' => mixed]
-     * @param array $attributes
-     * @return mixed
-     */
-    public function findBy(array $attributes)
-    {
-        return $this->repository->findBy($attributes);
     }
 }
