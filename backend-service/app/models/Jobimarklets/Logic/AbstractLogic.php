@@ -26,4 +26,36 @@ class AbstractLogic implements LogicInterface
     {
         $this->repository = $repo;
     }
+
+    /**
+     * Find Tag by Id.
+     *
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function find($id)
+    {
+        return $this->repository->find($id);
+    }
+
+    /**
+     * Delete Tag by Id.
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        return $this->repository->delete($id);
+    }
+
+    /**
+     * Find user by attributes. [key => ['operator' => '<,>,=,<>', 'value' => mixed]
+     * @param array $attributes
+     * @return mixed
+     */
+    public function findBy(array $attributes)
+    {
+        return $this->repository->findBy($attributes);
+    }
 }

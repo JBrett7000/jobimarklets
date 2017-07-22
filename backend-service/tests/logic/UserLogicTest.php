@@ -37,7 +37,7 @@ class UserLogicTest extends TestCase
         ]);
 
         //fail because of Username
-        $this->userLogic->createUser($user);
+        $this->userLogic->create($user);
     }
 
     /**
@@ -52,7 +52,7 @@ class UserLogicTest extends TestCase
         ]);
 
         //fail because of Username
-        $this->userLogic->createUser($user);
+        $this->userLogic->create($user);
     }
 
     /**
@@ -67,7 +67,7 @@ class UserLogicTest extends TestCase
         ]);
 
         //fail because of Username
-        $this->userLogic->createUser($user);
+        $this->userLogic->create($user);
     }
 
     public function testUserCreationValid()
@@ -80,7 +80,7 @@ class UserLogicTest extends TestCase
         ]);
 
         //fail because of Username
-       $this->userLogic->createUser($user);
+       $this->userLogic->create($user);
     }
 
     /**
@@ -96,13 +96,13 @@ class UserLogicTest extends TestCase
         ]);
 
         //fail because of Username
-        $this->userLogic->createUser($user);
+        $this->userLogic->create($user);
 
         $user = $this->userLogic->find(1);
         $user->name = 'Sameuel';
         $user->enabled = false;
 
-        $this->assertTrue($this->userLogic->updateUser($user));
+        $this->assertTrue($this->userLogic->update($user));
     }
 
     /**
@@ -118,9 +118,9 @@ class UserLogicTest extends TestCase
         ]);
 
         //fail because of Username
-        $this->userLogic->createUser($user);
+        $this->userLogic->create($user);
 
-        $this->assertTrue($this->userLogic->deleteUser(1));
+        $this->assertTrue($this->userLogic->delete(1));
     }
 
     /**
@@ -136,7 +136,7 @@ class UserLogicTest extends TestCase
         ]);
 
 
-        $this->assertTrue($this->userLogic->createUser($user));
+        $this->assertTrue($this->userLogic->create($user));
 
         $user = $this->userLogic->find(1);
         $this->assertInstanceOf(User::class, $user);

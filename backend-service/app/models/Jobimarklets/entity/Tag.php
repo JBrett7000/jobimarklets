@@ -10,6 +10,8 @@ namespace Jobimarklets\entity;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Jobimarklets\HasValidatorInterface;
 
 /**
  * Class Tag - Bookmark tags.
@@ -18,8 +20,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property  int $user_id - User ID owning this tag.
  * @property  string $title - Title of tag.
  */
-class Tag extends Model
+class Tag extends Model implements HasValidatorInterface
 {
+    public $timestamps = false;
+
+    protected $fillable = ['title'];
+
+    const RULES = [
+        'title'     => 'required|alpha_num|',
+        'user_id'   => 'required',
+    ];
 
     /**
      * User that owns this tag.
@@ -30,4 +40,11 @@ class Tag extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function validate()
+    {
+       return Validator::make($this->getAttributes(), self::RULES);
+    }
+
+
 }
