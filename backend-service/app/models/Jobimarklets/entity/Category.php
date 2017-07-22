@@ -10,6 +10,8 @@ namespace Jobimarklets\entity;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Jobimarklets\HasValidatorInterface;
 
 /**
  * Class Category - Category a Bookmarklet is under
@@ -19,20 +21,34 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id - User ID.
  * @property string $name - Name of category
  * @property string $description - Summary description of summary
- * @property datetime $created_at - Date category was created
- * @property datetime $updated_at - Date category was updated.
+ * @property \DateTime $created_at - Date category was created
+ * @property \DateTime $updated_at - Date category was updated.
  */
-class Category extends Model
+class Category extends Model implements HasValidatorInterface
 {
     protected $table = 'categories';
+
+    protected $fillable = ['name', 'description'];
+
+    const RULES = [
+        'user_id' => 'required',
+        'name'    => 'required|string|max:50',
+        'description' => 'string|max:255',
+    ];
 
     /**
      * User that own the Category
      *
-     * @return User
+     * @return mixed
      */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+    public function validate()
+    {
+        return Validator::make($this->getAttributes(), self::RULES);
     }
 }

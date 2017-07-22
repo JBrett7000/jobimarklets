@@ -64,6 +64,20 @@ class Bookmark extends Model implements HasValidatorInterface
     }
 
     /**
+     * Get the categories this Bookmark belongs to.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(
+            Category::class,
+            'bookmarks_categories',
+            'bookmark_id',
+            'category_id'
+        );
+    }
+
+    /**
      * Validate this Bookmark.
      * @return mixed
      */
@@ -71,6 +85,5 @@ class Bookmark extends Model implements HasValidatorInterface
     {
         return Validator::make($this->getAttributes(), self::RULES);
     }
-
 }
 
