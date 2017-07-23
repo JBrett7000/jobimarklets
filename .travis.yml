@@ -1,0 +1,12 @@
+language: php
+php:
+  - "5.6"
+services:
+  - mysql
+before_script:
+  - cp .env.travis .env
+  - mysql -e 'create database jobimarklet_tests;'
+  - composer self-update
+  - composer install --no-interaction
+script:
+  - vendor/bin/phpunit
