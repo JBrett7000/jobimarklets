@@ -12,3 +12,9 @@ before_script:
   - composer install --no-interaction
 script:
   - vendor/bin/phpunit
+branches:
+  Only:
+    - master
+    - develop
+    - /(feature|release|hotfix)\/.*$/
+    - /v?\d+\.\d+\.\d+
