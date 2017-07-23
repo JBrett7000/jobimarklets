@@ -35,6 +35,13 @@
     "scripts": {
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
+        ],
+        "test": [
+            "php -r \"copy('.env', '.env.bak');\"",
+            "php -r \"copy('.env.testing', '.env');\"",
+            "phpunit",
+            "php -r \"copy('.env.bak', '.env');\"",
+            "php -r \"unlink('.env.bak');\""
         ]
     },
     "minimum-stability": "dev",
