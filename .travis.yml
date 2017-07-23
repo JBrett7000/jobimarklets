@@ -4,9 +4,10 @@ php:
 services:
   - mysql
 before_script:
+  - cd backend-service
   - cp .env.travis .env
   - mysql -e 'create database jobimarklet_tests;'
   - composer self-update
   - composer install --no-interaction
 script:
-  - vendor/bin/phpunit
+  - backend-service/vendor/bin/phpunit
