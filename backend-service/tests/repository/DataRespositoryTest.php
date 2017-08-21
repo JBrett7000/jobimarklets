@@ -12,11 +12,12 @@ use Jobimarklets\entity\Category;
 use Jobimarklets\entity\Tag;
 use Jobimarklets\entity\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
+use MailThief\Testing\InteractsWithMail;
 
 
 class DataRespositoryTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, InteractsWithMail;
 
     /**
      * @expectedException InvalidArgumentException

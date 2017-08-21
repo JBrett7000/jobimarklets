@@ -28,7 +28,7 @@ class AuthRoutes extends AbstractRoutes
 
             $app->post('/auth/update/{id:[0-9]+}', ['uses' => 'AuthController@update']);
 
-            $app->post('/auth/delete', ['uses' => 'AuthController@unregister']);
+            $app->delete('/auth/delete', ['uses' => 'AuthController@unregister']);
 
         });
     }

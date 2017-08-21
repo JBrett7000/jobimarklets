@@ -20,7 +20,8 @@
         "squizlabs/php_codesniffer": "*",
         "sebastian/phpcpd": "*",
         "phpmd/phpmd" : "@stable",
-        "phing/phing": "2.*"
+        "phing/phing": "2.*",
+        "tightenco/mailthief": "v0.3.7"
     },
     "autoload": {
         "psr-4": {

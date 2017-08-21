@@ -39,9 +39,17 @@ class UserListerner implements ShouldQueue
             case UserEvent::EVENT_TYPE_CREATED :
                 $this->sendSignupEmail($event);
                 break;
+            case UserEvent::EVENT_TYPE_DELETE_ACCOUNT:
+                $this->sendRemovedAccountNotice($event);
+                break;
         }
     }
 
+    /**
+     * Send the Signup Email.
+     *
+     * @param UserEvent $event
+     */
     public function sendSignupEmail(UserEvent $event)
     {
         $hosts = Request::capture()->root();
@@ -62,6 +70,23 @@ class UserListerner implements ShouldQueue
             $message->from('support@gmail.com');
             $message->to($event->user()->email);
             $message->subject('Welcome to JobiMarklets');
+        });
+    }
+
+    /**
+     * Send the Account Deleted Notice.
+     *
+     * @param UserEvent $event
+     */
+    public function sendRemovedAccountNotice(UserEvent $event)
+    {
+        Mail::send('emails.deletedaccount', [
+            'name' => $event->user()->name,
+            'email' => $event->user()->email,
+        ], function ($message) use ($event) {
+            $message->to($event->user()->email, $event->user()->name);
+            $message->subject('Account Deleted Notification');
+            $message->from('support@jobimarklets.com', 'JobiMarklets Support');
         });
     }
 

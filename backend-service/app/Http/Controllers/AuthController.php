@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Jobimarklets\entity\User;
 use Jobimarklets\Exceptions\AuthenticationException;
 use Jobimarklets\Exceptions\UserCreationException;
@@ -276,13 +277,10 @@ class AuthController extends Controller
         $token = $request->header('api_token');
         $cache = Cache::get($token);
         $user = $this->userLogic->find($cache['userid']);
+
         $this->userLogic->delete($user->id);
 
-        event(
-            new UserEvent($user, UserEvent::EVENT_TYPE_DELETE_ACCOUNT)
-        );
-
-        return response('successful', 200);
+        return response('successful', 204);
     }
 
     public function activate($checksum)
@@ -300,7 +298,7 @@ class AuthController extends Controller
         }
 
         $this->userLogic->activateAccount($checkToken['user']);
-        Cache::forget($checkToken);
+        Cache::forget($checksum);
         return view('accountactivate',
             ['message' => "Account activated."]
         );
