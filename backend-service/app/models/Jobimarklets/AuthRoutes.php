@@ -17,6 +17,7 @@ class AuthRoutes extends AbstractRoutes
         $app->post('/auth', ['uses' => 'AuthController@authenticate']);
         $app->post('/auth/create', ['uses' => 'AuthController@create']);
 
+
         $app->group(['middleware' => 'valtoken'], function () use ($app) {
 
             $app->get('/auth', ['uses' => 'AuthController@index']);

@@ -284,4 +284,25 @@ class AuthController extends Controller
 
         return response('successful', 200);
     }
+
+    public function activate($checksum)
+    {
+        //TODO:
+        // 1. Check that Checksum Exists in the Cache.
+        // 2. If Checksum exists, set the enable flag for user.
+        // 3. If checksum doesn't exists, show the error message accordingly.
+        $checkToken = Cache::get($checksum);
+
+        if ($checkToken == null) {
+            return view('accountactivate',
+                ['message' => "Activation is invalid or has expired."]
+            );
+        }
+
+        $this->userLogic->activateAccount($checkToken['user']);
+
+        return view('accountactivate',
+            ['message' => "Account activated."]
+        );
+    }
 }

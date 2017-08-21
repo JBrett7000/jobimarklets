@@ -33,7 +33,7 @@
                             </div>
                             <div class="field" *ngIf="errorMessage">
                                 <p class="notification is-danger">
-                                    <button class="delete"></button>
+                                    <button class="delete" (click)="clearLogin()"></button>
                                     {{errorMessage}}
                                 </p>
                             </div>

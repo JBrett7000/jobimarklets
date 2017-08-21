@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Mail\MailServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('mailer', function ($app) {
+            return $app->loadComponent('mail', MailServiceProvider::class, 'mailer');
+        });
     }
 }

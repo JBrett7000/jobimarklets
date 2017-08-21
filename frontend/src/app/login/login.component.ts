@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 
 import { LoginForm} from "../app.models";
 import { Auth, SessionToken } from "../services/authentication.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class LoginComponent {
 
     sessionToken: SessionToken;
 
-    constructor(private service: Auth) {}
+    constructor(private service: Auth, private router: Router) {}
 
     login(): void {
         this.errorMessage = '';
@@ -28,7 +29,7 @@ export class LoginComponent {
         this.service.login(this.loginForm.email, this.loginForm.password)
             .subscribe(data => {
                 this.sessionToken = new SessionToken(data._body);
-                alert('Successful login');
+                this.router.navigate(["/home"]);
             },error => this.loginError(error));
     }
 
