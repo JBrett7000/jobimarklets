@@ -7,6 +7,7 @@ import { RouterModule} from "@angular/router";
 import { AppComponent} from './app.component';
 import {RegistrationComponent} from "./registration/registration.component";
 import { LoginComponent} from "./login/login.component";
+import { HomeComponent} from "./home/home.component";
 import { routes } from './app.routes';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { routes } from './app.routes';
     declarations: [
         AppComponent,
         RegistrationComponent,
-        LoginComponent
+        LoginComponent,
+        HomeComponent
     ],
     bootstrap: [ AppComponent ]
 })

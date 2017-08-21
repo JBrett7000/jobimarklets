@@ -11,6 +11,13 @@
 |
 */
 
+
+$app->get(
+    '/account/activate/{checksum:[0-9a-zA-Z]+}',
+    ['uses' => 'AuthController@activate']
+);
+
+
 $app->get('/[{any}]', function () use ($app) {
     return $app->make('view')->make('welcome');
 });
