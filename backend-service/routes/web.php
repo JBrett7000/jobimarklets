@@ -11,9 +11,18 @@
 |
 */
 
-$app->get('/', function () use ($app) {
+
+$app->get(
+    '/account/activate/{checksum:[0-9a-zA-Z]+}',
+    ['uses' => 'AuthController@activate']
+);
+
+
+$app->get('/[{any}]', function () use ($app) {
     return $app->make('view')->make('welcome');
 });
 
-// Custom User Routes
-new \Jobimarklets\AuthRoutes($app);
+$app->group(['prefix' => 'api'], function () use ($app) {
+    // Custom User Routes
+    new \Jobimarklets\AuthRoutes($app);
+});

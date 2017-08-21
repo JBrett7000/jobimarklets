@@ -1,12 +1,14 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-/backend-service/vendor/
-backend-service/public/assets/
+/backend-service/vendor/**
+backend-service/public/assets/*.js
 .gitignore
-.idea/
 node_modules/
 database/migrations/2017_06_11_170132_create_unique_index_on_bookmark_categories_table.php
 phpmd.xml
 /backend-service/.env.testing
 /backend-service/.env
+
+/frontend/src/app/**/*.js
+/frontend/src/app/**/*.map
 

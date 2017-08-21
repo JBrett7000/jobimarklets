@@ -91,4 +91,17 @@ class UserLogic extends AbstractLogic
     {
         return bin2hex(openssl_random_pseudo_bytes(60));
     }
+
+    /**
+     * Activate the users account.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function activateAccount($id)
+    {
+        $user = $this->find($id);
+        $user->enabled = true;
+        return $this->update($user);
+    }
 }

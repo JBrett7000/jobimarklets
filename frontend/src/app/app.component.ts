@@ -3,9 +3,8 @@
  */
 import { Component } from '@angular/core';
 
-
 @Component({
     selector: 'my-app',
-    template: '<h2>Hello world.</h2>'
+    template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {}

@@ -1,0 +1,102 @@
+<div class="container-fluid registration-body">
+   <section class="hero">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-24x24">
+                    <h2 class="title">JobiMarklets</h2>
+                </div>
+            </div>
+        </div>
+   </section>
+    <div class="columns is-centered">
+        <div class="column is-5">
+            <div class="field" *ngIf="successStatus || errorStatus">
+                <div class="notification" [ngClass]="getStatusClass()">
+                    <button class="delete" (click)="clear()"></button>
+                    {{message}}
+                </div>
+            </div>
+            <form>
+                <div class="registration-form">
+                <h1 class="title">Registration Form</h1>
+                <form>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input class="input" required placeholder="First name" tabindex="0" [(ngModel)]="form.firstName" name="firstName"/>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <input required placeholder="Last name" class="input" tabindex="1" [(ngModel)]="form.lastName" name="lastName"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <input type="email" placeholder="Email" class="input" tabindex="2" [(ngModel)]="form.email" name="email"/>
+                                    <span class="icon is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <input type="email" placeholder="Confirm Email" class="input" tabindex="3" [(ngModel)]="form.confirmEmail" required name="confirmEmail"/>
+                                    <span class="icon is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <input type="password" class="input" tabindex="4" placeholder="Password" [(ngModel)]="form.password" name="password"/>
+                                    <span class="icon is-left">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <input type="password" class="input" tabindex="5" placeholder="Confirm password" [(ngModel)]="form.confirmPassword" name="confirmPassword"/>
+                                    <span class="icon is-left">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body" style="margin-top: 1.2rem;">
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-primary" (click)="register()">Register</button> <button class="button" (click)="clear()">Clear</button>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="field">
+                                    <a routerLink="/">Back to Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

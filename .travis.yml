@@ -9,7 +9,7 @@ before_script:
   - mysql -e 'create database jobimarklet_tests;'
   - mysql -e "GRANT ALL PRIVILEGES ON jobimarklet_tests.* TO 'travis'@'%'"
   - composer self-update
-  - composer install --no-interaction
+  - composer update --no-interaction
 script:
   - vendor/bin/phpunit
 branches:

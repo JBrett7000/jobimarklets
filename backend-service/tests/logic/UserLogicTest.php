@@ -8,10 +8,11 @@
  */
 
 use Jobimarklets\entity\User;
+use MailThief\Testing\InteractsWithMail;
 
 class UserLogicTest extends TestCase
 {
-    use \Laravel\Lumen\Testing\DatabaseMigrations;
+    use \Laravel\Lumen\Testing\DatabaseMigrations, InteractsWithMail;
 
     protected $userLogic;
 
@@ -25,20 +26,6 @@ class UserLogicTest extends TestCase
 //        );
     }
 
-    /**
-     * @expectedException \Jobimarklets\Exceptions\UserCreationException
-     */
-    public function testUserCreationWithNumberInName()
-    {
-        $user = new User([
-            'name' => 'User 1',
-            'email' => 'user1@mail.com',
-            'password' => 'password1',
-        ]);
-
-        //fail because of Username
-        $this->userLogic->create($user);
-    }
 
     /**
      * @expectedException \Jobimarklets\Exceptions\UserCreationException
