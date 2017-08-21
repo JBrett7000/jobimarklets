@@ -1,5 +1,7 @@
 <?php
 
+use MailThief\Testing\InteractsWithMail;
+
 /**
  * Author: Ndifreke Ekott < ndy40.ekott@gmail.com >
  * File: AuthenticationTest.php
@@ -8,7 +10,7 @@
  */
 class AuthenticationTest extends TestCase
 {
-    use \Laravel\Lumen\Testing\DatabaseMigrations;
+    use \Laravel\Lumen\Testing\DatabaseMigrations, InteractsWithMail;
 
     public function testApplicationLoads()
     {
@@ -32,7 +34,7 @@ class AuthenticationTest extends TestCase
             'enabled' => true,
         ];
 
-        $this->json('POST', '/auth/create', $user)->seeStatusCode($code);
+        $this->json('POST', '/api/auth/create', $user)->seeStatusCode($code);
     }
 
     public function registrationDataWithCode()
@@ -55,11 +57,11 @@ class AuthenticationTest extends TestCase
             'enabled' => true,
         ];
 
-        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+        $this->json('POST', '/api/auth/create', $users)->assertResponseOk();
 
         $this->json(
             'POST',
-            '/auth',
+            '/api/auth',
             ['email' => 'user@mail.com', 'password' => 'password1']
         )->assertNotEmpty($this->response->getContent());
     }
@@ -73,15 +75,15 @@ class AuthenticationTest extends TestCase
             'enabled' => true,
         ];
 
-        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+        $this->json('POST', '/api/auth/create', $users)->assertResponseOk();
 
         $this->json(
             'POST',
-            '/auth',
+            '/api/auth',
             ['email' => 'user@mail.com', 'password' => 'password1']
         )->assertResponseOk();
 
-        $this->json('GET', '/auth', [], ['api_token' => $this->response->getContent()])
+        $this->json('GET', '/api/auth', [], ['api_token' => $this->response->getContent()])
         ->seeJson([
                 'id' => 1,
                 'email' => 'user@mail.com',
@@ -99,17 +101,17 @@ class AuthenticationTest extends TestCase
             'enabled' => true,
         ];
 
-        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+        $this->json('POST', '/api/auth/create', $users)->assertResponseOk();
 
         $this->json(
             'POST',
-            '/auth',
+            '/api/auth',
             ['email' => 'user@mail.com', 'password' => 'password1']
         )->assertResponseOk();
 
         $token = $this->response->getContent();
 
-        $this->json('GET', '/auth', [], [
+        $this->json('GET', '/api/auth', [], [
             'api_token' => $token
             ]
         )
@@ -118,7 +120,7 @@ class AuthenticationTest extends TestCase
             'email' => 'user@mail.com',
             'name' => 'user',
         ])
-        ->json('GET', '/auth/logout', [],
+        ->json('GET', '/api/auth/logout', [],
             ['api_token' => $token]
         )
         ->assertResponseOk();
@@ -133,19 +135,23 @@ class AuthenticationTest extends TestCase
             'enabled' => true,
         ];
 
-        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+        $this->json('POST', '/api/auth/create', $users)->assertResponseOk();
 
         $this->json(
             'POST',
-            '/auth',
+            '/api/auth',
             ['email' => 'user@mail.com', 'password' => 'password1']
         )->assertResponseOk();
 
         $token = $this->response->getContent();
 
-        $this->json('POST', '/auth/delete', [],
+        $this->json('DELETE', '/api/auth/delete', [],
             ['api_token' => $token]
-        )->assertEquals('successful', $this->response->getContent());
+        )->assertResponseStatus(204);
+
+        $this->seeMessageFor($users['email']);
+        $this->seeInSubjects('Account Deleted Notification');
+
     }
 
     public function testUpdateUserPassword()
@@ -157,22 +163,22 @@ class AuthenticationTest extends TestCase
             'enabled' => true,
         ];
 
-        $this->json('POST', '/auth/create', $users)->assertResponseOk();
+        $this->json('POST', '/api/auth/create', $users)->assertResponseOk();
 
         $this->json(
             'POST',
-            '/auth',
+            '/api/auth',
             ['email' => 'user@mail.com', 'password' => 'password1']
         )->assertResponseOk();
 
         $token = $this->response->getContent();
 
-        $this->json('GET', '/auth', [], [
+        $this->json('GET', '/api/auth', [], [
                 'api_token' => $token
             ]
         )->assertResponseOk();
 
-        $this->json('POST', '/auth/update/1',
+        $this->json('POST', '/api/auth/update/1',
             ['password' => 'password2'],
             ['api_token' => $token]
         )
