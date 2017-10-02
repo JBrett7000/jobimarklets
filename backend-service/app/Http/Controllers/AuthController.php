@@ -283,24 +283,72 @@ class AuthController extends Controller
         return response('successful', 204);
     }
 
+    /**
+     * Activate account.
+     *
+     * @param $checksum
+     * @return \Illuminate\View\View
+     */
     public function activate($checksum)
     {
-        //TODO:
-        // 1. Check that Checksum Exists in the Cache.
-        // 2. If Checksum exists, set the enable flag for user.
-        // 3. If checksum doesn't exists, show the error message accordingly.
         $checkToken = Cache::get($checksum);
 
         if ($checkToken == null) {
             return view('accountactivate',
-                ['message' => "Activation is invalid or has expired."]
+                [
+                    'message' => "Activation is invalid or has expired.",
+                    'success' => false
+                ]
             );
         }
 
         $this->userLogic->activateAccount($checkToken['user']);
         Cache::forget($checksum);
         return view('accountactivate',
-            ['message' => "Account activated."]
+            ['message' => "Account activated.", 'success' => true]
         );
+    }
+
+    /**
+     * Send activation email if failed previously.
+     *
+     * @param Request $request - Pass 'email' value
+     * @return \Illuminate\View\View
+     */
+    public function reactivate(Request $request)
+    {
+        $email = $request->input('email');
+        $message = '';
+        $success = false;
+        $user = null;
+        try {
+            $user = $this->userLogic->findBy([
+               'email' => [
+                   'operator' => '=',
+                   'value' => $request->input('email')
+               ],
+               'enabled' => ['operator' => '!=', 'value' => 1]
+            ]);
+
+            if ($user->isEmpty()) {
+               throw new ModelNotFoundException("can't find user $email");
+            }
+
+            event(new UserEvent($user->first(), UserEvent::EVENT_TYPE_CREATED));
+            $message = 'Account activated';
+            $success = true;
+
+        } catch (ModelNotFoundException $ex) {
+            if (is_null($user)) {
+               $message = 'Activation link is not valid.';
+            } else {
+               $message = "Account with email $email is already activated.";
+            }
+        }
+
+        return view('accountactivate', [
+           'message' => $message,
+           'success' => $success
+        ]);
     }
 }
