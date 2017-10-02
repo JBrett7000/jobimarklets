@@ -85,3 +85,7 @@ div.registration-body {
 section.hero {
     background-color: inherit;
 }
+
+.hide {
+    display: none;
+}
