@@ -9,6 +9,7 @@ phpmd.xml
 /backend-service/.env.testing
 /backend-service/.env
 
-/frontend/src/app/**/*.js
 /frontend/src/app/**/*.map
+/frontend/src/app/**/*.component.js
+/frontend/src/app/**/*.module.js
 

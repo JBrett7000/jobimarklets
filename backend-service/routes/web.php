@@ -17,6 +17,7 @@ $app->get(
     ['uses' => 'AuthController@activate']
 );
 
+$app->post('/account/reactivate', ['uses' => 'AuthController@reactivate']);
 
 $app->get('/[{any}]', function () use ($app) {
     return $app->make('view')->make('welcome');
