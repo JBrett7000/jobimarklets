@@ -331,19 +331,15 @@ class AuthController extends Controller
             ]);
 
             if ($user->isEmpty()) {
-               throw new ModelNotFoundException("can't find user $email");
+               throw new ModelNotFoundException("Email $email not valid.");
             }
 
             event(new UserEvent($user->first(), UserEvent::EVENT_TYPE_CREATED));
-            $message = 'Account activated';
+            $message = 'Account activation email sent.';
             $success = true;
 
         } catch (ModelNotFoundException $ex) {
-            if (is_null($user)) {
-               $message = 'Activation link is not valid.';
-            } else {
-               $message = "Account with email $email is already activated.";
-            }
+           $message = $ex->getMessage();
         }
 
         return view('accountactivate', [
