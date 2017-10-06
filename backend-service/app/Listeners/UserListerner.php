@@ -10,7 +10,6 @@ namespace App\Listeners;
 
 
 use App\Events\UserEvent;
-use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -56,8 +55,7 @@ class UserListerner implements ShouldQueue
 
         $userString = $event->user()->name . $event->user()->email;
 
-        $checksum = Hash::make($hosts . $userString . (time() * 0.234));
-        $checksum = preg_replace('/\/|\$|\.|\|/', '', $checksum);
+        $checksum = $this->generateChecksum($hosts . $userString);
 
         Cache::forever($checksum, ['user' => $event->user()->id]);
 
@@ -67,7 +65,7 @@ class UserListerner implements ShouldQueue
             'host' => Request::capture()->root(),
             'checksum' => $checksum,
         ], function ($message) use ($event) {
-            $message->from('support@gmail.com');
+            $message->from('support@jobimarklets.com', 'JobiMarklets Support');
             $message->to($event->user()->email);
             $message->subject('Welcome to JobiMarklets');
         });
@@ -88,6 +86,23 @@ class UserListerner implements ShouldQueue
             $message->subject('Account Deleted Notification');
             $message->from('support@jobimarklets.com', 'JobiMarklets Support');
         });
+    }
+
+    /**
+     * Local method for converting string to checksum
+     *
+     * @param $toConvert
+     */
+    protected function generateChecksum($toConvert)
+    {
+        $checksum = Hash::make($toConvert . (time() * 0.234));
+        $checksum = preg_replace(
+            '/\/|\$|\.|\|/',
+            '',
+            $checksum
+        );
+
+        return $checksum;
     }
 
 }

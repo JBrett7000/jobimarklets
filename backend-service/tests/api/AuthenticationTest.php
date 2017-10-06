@@ -1,5 +1,10 @@
 <?php
 
+use App\Listeners\UserListerner;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
+use Jobimarklets\Logic\UserLogic;
+use MailThief\Message;
 use MailThief\Testing\InteractsWithMail;
 
 /**
@@ -16,6 +21,18 @@ class AuthenticationTest extends TestCase
     {
         $this->get('/')
             ->assertResponseOk();
+    }
+
+    private function getUserListenerMock()
+    {
+        $listener = $this->getMockBuilder(UserListerner::class)
+            ->setMethods(['generateChecksum'])
+            ->setConstructorArgs([$this->app->make(UserLogic::class)])
+            ->getMock();
+        $listener->method('generateChecksum')
+            ->willReturn('XXX');
+
+        return $listener;
     }
 
     /**
@@ -183,5 +200,132 @@ class AuthenticationTest extends TestCase
             ['api_token' => $token]
         )
         ->assertResponseOk();
+    }
+
+    public function testEmailSentAfterRegistration()
+    {
+        $user = [
+            'name'     => 'user',
+            'email'    => 'user@gmail.com',
+            'password' => 'password1',
+            'enabled'  => false,
+        ];
+
+        $this->json('POST', '/api/auth/create', $user)->assertResponseOk();
+        $this->seeMessageFor('user@gmail.com');
+        $this->seeInSubjects('Welcome to JobiMarklets');
+    }
+
+    public function testEmailActivationCodeWorks()
+    {
+        $user = [
+            'name'     => 'user',
+            'email'    => 'user@gmail.com',
+            'password' => 'password1',
+            'enabled'  => false,
+        ];
+
+        $listener = $this->getUserListenerMock();
+
+        $this->app->instance(UserListerner::class, $listener);
+
+        $this->json('POST', '/api/auth/create', $user)->assertResponseOk();
+        $this->seeMessageFor('user@gmail.com');
+
+        $this->assertNotNull(Cache::get('XXX'));
+        $this->assertArrayHasKey('user', Cache::get('XXX'));
+        $cachedData = Cache::get('XXX');
+        $this->assertSame(1, $cachedData['user']);
+    }
+
+    public function testEmailActivationLinkWorks()
+    {
+        $user = [
+            'name'     => 'user',
+            'email'    => 'user@gmail.com',
+            'password' => 'password1',
+            'enabled'  => false,
+        ];
+
+        $listener = $this->getUserListenerMock();
+
+        $this->app->instance(UserListerner::class, $listener);
+
+        $this->json('POST', '/api/auth/create', $user)->assertResponseOk();
+        $this->seeMessageFor('user@gmail.com');
+
+        $this->get('/account/activate/XXX')->assertContains(
+            'activated', $this->response->content()
+        );
+    }
+
+    public function testEmailActivationExpiredLink()
+    {
+        $user = [
+            'name'     => 'user',
+            'email'    => 'user@gmail.com',
+            'password' => 'password1',
+            'enabled'  => false,
+        ];
+
+        $listener = $this->getUserListenerMock();
+
+        $this->app->instance(UserListerner::class, $listener);
+
+        $this->json('POST', '/api/auth/create', $user)->assertResponseOk();
+        Cache::forget('XXX');
+
+        $this->get('/account/activate/XXX')->assertContains(
+            'expired', $this->response->content()
+        );
+    }
+
+    public function testResendActivationAfterFailedActivation()
+    {
+        $user = [
+            'name'     => 'user',
+            'email'    => 'user@gmail.com',
+            'password' => 'password1',
+            'enabled'  => false,
+        ];
+
+        $listener = $this->getUserListenerMock();
+
+        $this->app->instance(UserListerner::class, $listener);
+
+        $this->json('POST', '/api/auth/create', $user)->assertResponseOk();
+        Cache::forget('XXX');
+
+        $this->get('/account/activate/XXX')->assertContains(
+            'invalid', $this->response->content()
+        );
+
+        $this->post('/account/reactivate', ['email' => 'user@gmail.com']);
+        $this->seeMessageFor('user@gmail.com');
+    }
+
+    public function testResendActivationWorks()
+    {
+        $user = [
+            'name'     => 'user',
+            'email'    => 'user@gmail.com',
+            'password' => 'password1',
+            'enabled'  => false,
+        ];
+
+        $listener = $this->getUserListenerMock();
+        $this->app->instance(UserListerner::class, $listener);
+
+        $this->json('POST', '/api/auth/create', $user)
+            ->assertResponseOk();
+
+        Cache::forget('XXX');
+
+        $this->get('/account/activate/XXX')->assertContains(
+            'invalid', $this->response->content()
+        );
+
+        $this->post('/account/reactivate', ['email' => 'user@gmail.com'])
+            ->assertContains('email sent', $this->response->content());
     }
 }
